@@ -1,27 +1,19 @@
-# SPED-CTE v3.00a
+# SPED-CTE v4.00
 
-[![Chat][ico-gitter]][link-gitter]
+Biblioteca para geração e comunicação das CTe com as SEFAZ autorizadoras, e visa fornecer os meios para gerar, assinar e enviar os dados relativos ao projeto Sped CTe das SEFAZ.
 
-Biblioteca para geração e comunicação das CTe com as SEFAZ autorizadoras.
+## Atualizado
 
-## Nova versão 4.00 (a ser inclusa na biblioteca)
+- Nota Técnica 2026.004 RTC v1.00 Adequação do leiaute do CT-e para a Reforma Tributária do Consumo (IBS/CBS/IS)
+- Pacote de Schemas PL_CTe_400_RTC (47 arquivos XSD)
+- Evento de Apropriação de Crédito Presumido pelo tomador TAC (`evApropriaCredPres`)
+- Definição de `gICMSPrevistoPagtoAntecip` e `vICMSPrevisto` no schema `cteTiposBasico_v4.00.xsd`
+- Expansão de `DFeTiposBasicos_v1.00.xsd` para suporte aos regimes específicos e gerais de RTC
+- Nota Técnica 2026.002 Grupo obrigatório `<IBSCBS>` (`<gIBSUF>`, `<gIBSMun>`, `<gCBS>`)
+- Quebra de compatibilidade upstream: substituição da classe `Make` por `MakeCTe`
+- Suporte à chave de acesso alfanumérica (`TChDFe`)
+- Schema XSD CNPJ Alfa
 
-### Homologação a partir de 04/2023
-### Produção a partir de 06/2023
-
->**Numa análise preliminar existem poucas alterações no modelo 57**
-
-#### Mod. 57 - Campos NOVOS ou com alteração na versão 4.00
-- CRT  (em emit)
-- infCteComp 
-- infPAA
-
-#### Mod. 57 - Campos Removidos na versão 4.00
-- refCteAnu
-- tomaICMS
-- infCteAnu
-
-*sped-cte é um framework para geração CTe e eventos na comunicação com as SEFAZ autorizadoras.*
 
 [![Build Status][ico-travis]][link-travis]
 [![Latest Version on Packagist][ico-version]][link-packagist]
