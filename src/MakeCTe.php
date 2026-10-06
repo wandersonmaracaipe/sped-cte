@@ -587,9 +587,9 @@ class MakeCTe
         // inclui o Node enderEmit dentro do emit antes da tag CRT
         $node = $this->emit->getElementsByTagName("CRT")->item(0);
         $this->emit->insertBefore($this->enderEmit, $node);
-        // NT 2026.002 §4: ISUFEmit entre enderEmit e CRT (ordem do XSD)
+        // NT 2026.002 §4: ISUFEmit vem DEPOIS do CRT (ordem do XSD: enderEmit, CRT, ISUFEmit)
         if (!empty($this->ISUFEmit)) {
-            $this->emit->insertBefore($this->ISUFEmit, $node);
+            $this->emit->appendChild($this->ISUFEmit);
         }
 
         $this->dom->appChild($this->infCte, $this->emit, 'Falta tag "infCte"');
@@ -2783,6 +2783,7 @@ class MakeCTe
     {
         $possible = [
             'vTPrest',
+            'vTPrestLiq',
             'vRec'
         ];
         $std = $this->equilizeParameters($std, $possible);
@@ -2794,6 +2795,14 @@ class MakeCTe
             $this->conditionalNumberFormatting($std->vTPrest),
             true,
             $identificador . 'Valor Total da Prestação do Serviço'
+        );
+        // NT 2026.004 RTC: valor líquido da prestação, sem os tributos (opcional, entre vTPrest e vRec)
+        $this->dom->addChild(
+            $this->vPrest,
+            'vTPrestLiq',
+            $this->conditionalNumberFormatting($std->vTPrestLiq),
+            false,
+            $identificador . 'Valor Líquido da Prestação sem tributos'
         );
         $this->dom->addChild(
             $this->vPrest,
@@ -3249,7 +3258,7 @@ class MakeCTe
         if ($std->vTotTrib > 0) {
             $this->vTotTrib = $this->dom->createElement("vTotTrib", $this->conditionalNumberFormatting($std->vTotTrib));
         }
-        if (isset($std->infAdFisco)) {
+        if (!empty($std->infAdFisco)) { // vazio violaria o minLength=1 do XSD
             $this->infAdFisco = $this->dom->createElement("infAdFisco", Strings::replaceUnacceptableCharacters($std->infAdFisco));
         }
         if (!empty($std->vICMSUFFim) || !empty($std->vICMSUFIni)) {
